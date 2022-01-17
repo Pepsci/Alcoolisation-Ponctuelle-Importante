@@ -13,7 +13,7 @@ const drinkSchema = new Schema({
       "longDrink",
       "wine",
       "champagne",
-      "strongAlcool",
+      "strongAlcohol",
     ],
   },
   image: String,
