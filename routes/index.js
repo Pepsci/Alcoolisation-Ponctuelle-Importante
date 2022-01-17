@@ -1,12 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+
 const uploader = require('../config/cloudinary')
 const drinkModel = require("../model/Drink")
 
-router.get('/', (req, res, next) => {
-  res.render('index');
+router.get("/", (req, res, next) => {
+  res.render("index", {
+    css: ["index"],
+  });
 });
-
 
 router.get('/dashboard', (req, res, next) => {
   res.render('../views/dashboard/drink-manage.hbs')
@@ -53,6 +55,5 @@ res.redirect("../views/dashboard/drink-manage.hbs")
 
 router.get('/drink-manage', (req, res, next) => {
   res.render("../views/dashboard/drink-manage.hbs")
-});
 
 module.exports = router;
