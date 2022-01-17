@@ -1,4 +1,5 @@
-const { model, Schema, mongo } = require("mongoose");
+const mongoose = require("mongoose");
+const Shema = mongoose.Schema;
 
 const drinkSchema = new Schema({
   name: {
