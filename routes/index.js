@@ -55,5 +55,6 @@ res.redirect("../views/dashboard/drink-manage.hbs")
 
 router.get('/drink-manage', (req, res, next) => {
   res.render("../views/dashboard/drink-manage.hbs")
+})
 
 module.exports = router;
