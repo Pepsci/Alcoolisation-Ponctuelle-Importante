@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Shema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const drinkSchema = new Schema({
   name: {
