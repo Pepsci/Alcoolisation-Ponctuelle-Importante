@@ -1,0 +1,23 @@
+<form action="" method="post" enctype="multipart/form-data">
+
+    <label for="drink-name">Name</label>
+    <select name="name" id="name">
+        <option value="-1" disabled selected>Choose a name</option>
+        {{#each drink}}
+            <option value="{{this._id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="size">Size</label>
+    <select name="size" id="size">
+        <option value="-1" disabled selected>Choose a size </option>
+        {{#each drink}}
+            <option value="{{this._id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <img class="preview" src="{{drink.image}}" alt="{{drink.name}}">
+
+    <label for="drink-image">Choose a Image</label>
+    <input type="file" name="image" id="image">
+</form>
