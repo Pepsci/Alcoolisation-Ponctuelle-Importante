@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const userModel = require("../model/User");
 const bcrypt = require("bcrypt");
-const flash = require('flash');
+const flash = require("flash");
 const consumptionModel = require("../model/Consumption");
 const drinkModel = require("../model/Drink");
+const uploader = require("./../config/cloudinary");
 
 router.get("/signup", (req, res, next) => {
   res.render("../views/user/signup.hbs");
@@ -33,11 +34,11 @@ router.get("/signin", (req, res, next) => {
 
 router.post("/signin", async (req, res, next) => {
   try {
-    const { email, password } = req.body
-    const foundUser = await userModel.findOne({ email : email});
-    if(!foundUser) {
+    const { email, password } = req.body;
+    const foundUser = await userModel.findOne({ email: email });
+    if (!foundUser) {
       req.flash("error", "Invalid credentials");
-        res.redirect("/signin");
+      res.redirect("/signin");
     } else {
       const isSamePasseword = bcrypt.compareSync(password, foundUser.password);
       if (!isSamePasseword) {
@@ -50,8 +51,8 @@ router.post("/signin", async (req, res, next) => {
         res.redirect("/");
       }
     }
-  } catch(e){
-    next(e)
+  } catch (e) {
+    next(e);
   }
 });
 
@@ -65,21 +66,22 @@ router.get("/profil", (req, res, next) => {
   res.render("../views/user/profil.hbs");
 });
 
-router.get('/cons-add', async (req, res, next) => {
-  res.render("../views/user/consumption-add.hbs", {consumption : await consumptionModel.find().populate('drinks')})
-})
+router.get("/cons-add", async (req, res, next) => {
+  res.render("../views/user/consumption-add.hbs", {
+    consumption: await consumptionModel.find().populate("drinks"),
+  });
+});
 
-router.post('/cons-add', uploader.single("image"), async (req, res, next) => {
-try {
-const newCons = {...req.body};
-if (!req.file) newCons.image = undefined;
-  else newCons.image = req.file.path;
-  await consumptionModel.create(newCons)
-  res.redirect("/profil")
-}
-catch(e){
-  next(e)
-}
-})
+router.post("/cons-add", uploader.single("image"), async (req, res, next) => {
+  try {
+    const newCons = { ...req.body };
+    if (!req.file) newCons.image = undefined;
+    else newCons.image = req.file.path;
+    await consumptionModel.create(newCons);
+    res.redirect("/profil");
+  } catch (e) {
+    next(e);
+  }
+});
 
 module.exports = router;
