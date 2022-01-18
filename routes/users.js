@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userModel = require("../model/User");
 const bcrypt = require("bcrypt");
-const flash = require("flash");
+const flash = require("connect-flash");
 const consumptionModel = require("../model/Consumption");
 const drinkModel = require("../model/Drink");
 const uploader = require("./../config/cloudinary");
@@ -12,8 +12,8 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", async (req, res, next) => {
+  const newUser = {...req.body}
   try {
-    const newUser = { ...req.body };
     const foundUser = await userModel.findOne({ email: newUser.email });
     if (foundUser) {
       res.redirect("/signup");
@@ -24,6 +24,7 @@ router.post("/signup", async (req, res, next) => {
       res.redirect("/signin");
     }
   } catch (e) {
+    console.error(e)
     res.redirect("/signup");
   }
 });
@@ -33,26 +34,28 @@ router.get("/signin", (req, res, next) => {
 });
 
 router.post("/signin", async (req, res, next) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
-    const foundUser = await userModel.findOne({ email: email });
+    const foundUser = await userModel.findOne({ email });
     if (!foundUser) {
-      req.flash("error", "Invalid credentials");
-      res.redirect("/signin");
-    } else {
-      const isSamePasseword = bcrypt.compareSync(password, foundUser.password);
-      if (!isSamePasseword) {
-        req.flash("error", "Invalid credentials");
-        res.redirect("/signin");
-      } else {
-        const userObject = foundUser.toObject();
-        delete userObject.password;
-        req.session.currentUser = userObject;
-        res.redirect("/");
-      }
+      // This will be handled, by the eraseSessionMessage middelware in app.js
+      req.session.msg = { status: 401, text: "Invalid credentials" };
+      /**  Same could be done using the flash middleware **/
+      // req.flash("error", "Invalid credentials");  // If you wanted to use flash you could aswell, you would have to handle i
+      return res.redirect("/signin");
     }
-  } catch (e) {
-    next(e);
+    if (!bcrypt.compareSync(password, foundUser.password)) {
+      // req.flash("error", "Invalid credentials");
+      req.session.msg = { status: 401, text: "Invalid credentials" };
+      return res.render("/signin");
+    }
+    req.session.currentUser = {
+      _id: foundUser._id,
+    };
+
+    res.redirect("/");
+  } catch (err) {
+    next(err);
   }
 });
 

@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const consumptionSchema = new Schema({
   date: Date,
-  drink: String,
   quantity: Number,
   user: { type: Schema.Types.ObjectId, ref: "user" },
   drink: { type: Schema.Types.ObjectId, ref: "drink" },
