@@ -31,7 +31,7 @@ router.post('/drink-add', uploader.single("image"), async (req, res, next) => {
   }
 });
 
-router.get('drink-update', async (req, res, next) => {
+router.get('/drink-update', async (req, res, next) => {
   try {
   const drink = await drinkModel.findById(req.params.id)
   res.render("../views/dashboard/drink-update.hbs", {drinks})
@@ -41,7 +41,7 @@ router.get('drink-update', async (req, res, next) => {
   }
 });
 
-router.post('drink-update', uploader.single("image"), async (req,res, next) => {
+router.post('/drink-update', uploader.single("image"), async (req,res, next) => {
   try {
     const updatedDrink = {...req.body}
     if (req.file) updatedDrink.image = req.file.path
