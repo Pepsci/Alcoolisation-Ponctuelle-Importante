@@ -48,14 +48,11 @@ body {
   height: 200px;
 }
 
-.menu {
+.menu img {
   position: absolute;
-  height: 300px;
-  width: 180px;
-  border: 2px solid black;
-  bottom: 403px;
+  width: 250px;
+  bottom: 381px;
   left: 30px;
-  background-color: aliceblue;
 }
 
 .onBar {
