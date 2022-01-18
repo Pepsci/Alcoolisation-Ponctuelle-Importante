@@ -1,18 +1,16 @@
-<form action="/manage" method="post" enctype="multipart/form-data">
+<form action="/drink-update" method="post" enctype="multipart/form-data">
 
     <label for="drink-name">Name</label>
-    <select name="name" id="name">
-        <option value="-1" disabled selected>Choose a name</option>
-        {{#each drink}}
-            <option value="{{this._id}}">{{this.name}}</option>
-        {{/each}}
-    </select>
+   <input type="text" name="name" id="name" value="{{this.name}}">
+
+   <label for="ABV">ABV (Alcohol By Volume)</label>
+   <input type="number" name="ABV" id="ABV" value="{{this.ABV}}">
 
     <label for="size">Size</label>
     <select name="size" id="size">
         <option value="-1" disabled selected>Choose a size </option>
         {{#each drink}}
-            <option value="{{this._id}}">{{this.name}}</option>
+            <option value="{{this._id}}">{{this.size}}</option>
         {{/each}}
     </select>
 

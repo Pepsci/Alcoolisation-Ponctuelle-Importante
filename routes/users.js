@@ -8,7 +8,7 @@ const drinkModel = require("../model/Drink");
 const uploader = require("./../config/cloudinary");
 
 router.get("/signup", (req, res, next) => {
-  res.render("../views/user/signup.hbs");
+  res.render("user/signup.hbs");
 });
 
 router.post("/signup", async (req, res, next) => {
@@ -30,7 +30,7 @@ router.post("/signup", async (req, res, next) => {
 });
 
 router.get("/signin", (req, res, next) => {
-  res.render("../views/user/signin.hbs");
+  res.render("user/signin.hbs");
 });
 
 router.post("/signin", async (req, res, next) => {
@@ -66,11 +66,11 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/profil", (req, res, next) => {
-  res.render("../views/user/profil.hbs");
+  res.render("user/profil.hbs");
 });
 
 router.get("/cons-add", async (req, res, next) => {
-  res.render("../views/user/consumption-add.hbs", {
+  res.render("user/consumption-add.hbs", {
     consumption: await consumptionModel.find().populate("drinks"),
   });
 });
