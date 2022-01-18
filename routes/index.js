@@ -43,27 +43,26 @@ router.get("/drink-manage", async (req, res, next) => {
 
 router.get("/drink-update/:id", async (req, res, next) => {
   try {
+    const drinkSize = await drinkModel.find();
     const drink = await drinkModel.findById(req.params.id);
-    res.render("dashboard/drink-update.hbs", { drink });
+    res.render("dashboard/drink-update", { drink, drinkSize });
   } catch (e) {
     next(e);
   }
 });
 
-router.post(
-  "/drink-update/:id",
-  uploader.single("image"),
-  async (req, res, next) => {
-    try {
-      const updatedDrink = { ...req.body };
-      if (req.file) updatedDrink.image = req.file.path;
-      await drinkModel.findByIdAndUpdate(req.params.id, updatedDrink);
-      res.redirect("/dashboard/drink-manage");
-    } catch (e) {
-      next(e);
-    }
+router.post("/:id", uploader.single("image"), async (req, res, next) => {
+  try {
+    const updatedDrink = { ...req.body };
+    if (req.file) updatedDrink.image = req.file.path;
+    await drinkModel.findByIdAndUpdate(req.params.id, updatedDrink, {
+      new: true,
+    });
+    res.redirect("/drink-manage");
+  } catch (e) {
+    next(e);
   }
-);
+});
 
 router.get("/drink-delete/:id", (req, res, next) => {
   drinkModel
