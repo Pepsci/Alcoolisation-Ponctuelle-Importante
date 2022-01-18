@@ -4,7 +4,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const hbs = require("hbs");
-
+const flash = require("connect-flash");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(flash());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

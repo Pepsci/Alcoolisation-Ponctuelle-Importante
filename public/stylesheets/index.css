@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-color: antiquewhite;
+}
+
+/* .container {
+  left: 50%;
+  transform: translate(-50%);
+} */
+
+.banniere {
+  position: absolute;
+  height: 50px;
+  /* width: 700px; */
+  border: 2px solid black;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%);
+}
+/* .banierre {
+  width: auto;
+  margin: auto;
+} */
+
+.bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%);
+}
+
+.caisse {
+  position: absolute;
+  bottom: 400px;
+  right: 10px;
+}
+
+.barImg {
+  height: 400px;
+}
+
+.caisseImg {
+  height: 200px;
+}
+
+.menu {
+  position: absolute;
+  height: 300px;
+  width: 180px;
+  border: 2px solid black;
+  bottom: 403px;
+  left: 30px;
+  background-color: aliceblue;
+}
+
+.onBar {
+  position: absolute;
+  bottom: 386px;
+  left: 300px;
+}
+
+.onBar img {
+  height: 100px;
+}
+
+.ongBar,
+img:nth-child(2) {
+  position: absolute;
+  height: 270px;
+  bottom: 15px;
+  left: 115px;
+}
+
+.log {
+  position: absolute;
+  right: 20%;
+  top: 100px;
+  height: 70px;
+  width: 100px;
+  border: 2px solid black;
+}
+
+/* @media screen and (max-width: 1200px) {
+  .barImg {
+    height: 300px;
+  }
+} */
+
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
