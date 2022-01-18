@@ -1,1 +1,17 @@
-// form add conso
+<form action="" method="post">
+    <label for="date">Date</label>
+    <input type="date" name="date" id="date">
+
+    <label for="drink">Drink</label>
+    <select name="drink" id="drink">
+        <option value="-1" disabled selected>Choose a name</option>
+        {{#each drink}}
+            <option value="{{this._id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="quantity">Quantity</label>
+    <input type="number" name="quantity" id="quantity">
+
+
+</form>
