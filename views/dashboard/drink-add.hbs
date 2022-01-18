@@ -1,19 +1,10 @@
 <form action="/drink-add" method="post" enctype="multipart/form-data">
 
     <label for="drink-name">Name</label>
-    <select name="name" id="name">
-        <option value="-1" disabled selected>Choose a name</option>
-        <option value="largeBeer">Large Beer</option>
-        <option value="smallBeer">Small Beer</option>
-        <option value="largeShooter">Large Shooter</option>
-        <option value="smallShooter">Small Shooter</option>
-        <option value="bottleBeer">Bottle Beer</option>
-        <option value="longDrink">Long Drink</option>
-        <option value="shortDrink">Short Drink</option>
-        <option value="wine">Glass of Wine</option>
-        <option value="champagne">Glass of Champagne</option>
-        <option value="strongAlcohol">Strong Alcohol</option>
-    </select>
+    <input type="text" name="name" id="name">
+
+<label for="ABV"> ABV (Alcohol by Volume)</label>
+    <input type="number" name="ABV" min="1" max="100">
 
     <label for="size">Size</label>
     <select name="size" id="size">
@@ -31,4 +22,6 @@
     
     <label for="drink-image">Image</label>
     <input type="file" name="image" id="">
+
+    <button>Add Drink</button>
 </form>
