@@ -25,10 +25,6 @@ body {
   left: 50%;
   transform: translate(-50%);
 }
-/* .banierre {
-  width: auto;
-  margin: auto;
-} */
 
 .bar {
   position: absolute;
@@ -82,11 +78,10 @@ img:nth-child(2) {
 
 .log {
   position: absolute;
-  right: 20%;
+  right: 30%;
   top: 100px;
   height: 70px;
   width: 100px;
-  border: 2px solid black;
 }
 
 /* @media screen and (max-width: 1200px) {
