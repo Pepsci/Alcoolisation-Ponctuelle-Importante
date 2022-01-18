@@ -1,0 +1,27 @@
+<h1>Drink Manage Page</h1>
+
+  <table class="product-manage-table">
+    <thead>
+      <tr class="table-row">
+        <th class="table-head">Image</th>
+        <th class="table-head">Name</th>
+        <th class="table-head">ABV</th>
+        <th class="table-head">Size</th>
+        <th class="table-head">Edit</th>
+        <th class="table-head">Delete</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each drinkManage}}
+      <tr class="table-row">
+        {{> dashboard_drink_row}}
+      </tr>
+      {{/each}}
+      {{#unless drinkManage}}
+      <tr>
+        <td colspan="6">sorry no drink yet</td>
+      </tr>
+      {{/unless}}
+    </tbody>
+  </table>

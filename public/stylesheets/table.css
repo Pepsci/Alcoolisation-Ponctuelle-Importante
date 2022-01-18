@@ -1,0 +1,15 @@
+.product-manage-table,
+tr,
+td,
+th {
+  border-collapse: collapse;
+  border: 1px solid;
+  color: antiquewhite;
+  background-color: black;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.product-manage-table img {
+  height: 50px;
+}

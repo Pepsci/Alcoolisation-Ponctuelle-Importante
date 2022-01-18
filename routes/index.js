@@ -32,6 +32,15 @@ router.post("/drink-add", uploader.single("image"), async (req, res, next) => {
   }
 });
 
+router.get("/drink-manage", async (req, res, next) => {
+  try {
+    res.render("dashboard/drink-manage", {
+      drinkManage: await drinkModel.find(),
+      css: ["table"],
+    });
+  } catch (next) {}
+});
+
 router.get("/drink-update/:id", async (req, res, next) => {
   try {
     const drink = await drinkModel.findById(req.params.id);
@@ -49,15 +58,20 @@ router.post(
       const updatedDrink = { ...req.body };
       if (req.file) updatedDrink.image = req.file.path;
       await drinkModel.findByIdAndUpdate(req.params.id, updatedDrink);
-      res.redirect("dashboard/drink-manage.hbs");
+      res.redirect("/dashboard/drink-manage");
     } catch (e) {
       next(e);
     }
   }
 );
 
-router.get("/drink-manage", (req, res, next) => {
-  res.render("dashboard/drink-manage.hbs");
+router.get("/drink-delete/:id", (req, res, next) => {
+  drinkModel
+    .findByIdAndDelete(req.params.id)
+    .then((deletedDrink) => {
+      res.redirect("/drink-manage");
+    })
+    .catch(next);
 });
 
 module.exports = router;
