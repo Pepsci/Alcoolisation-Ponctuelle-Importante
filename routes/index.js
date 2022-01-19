@@ -91,4 +91,13 @@ router.get("/drink-delete/:id", (req, res, next) => {
     .catch(next);
 });
 
+router.get("/user-delete/:id", (req, res, next) => {
+  userModel
+    .findByIdAndDelete(req.params.id)
+    .then((deletedDrink) => {
+      res.redirect("/user-manage");
+    })
+    .catch(next);
+});
+
 module.exports = router;

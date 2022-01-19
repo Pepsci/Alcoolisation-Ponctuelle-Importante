@@ -1,0 +1,22 @@
+{{> nav_dashboard}}
+
+<h2>Update User {{user.name}}</h2>
+
+<form action="/user-update/{{user._id}}" method="post">
+
+    <label for="username">Name</label>
+    <input type="text" name="username" id="username" value="{{user.username}}">
+
+    <label for="email">Email</label>
+    <input type="email" name="email" required id="email" value="{{user.email}}">
+
+    {{#if isAdmin}}
+        <label for="role">Role</label>
+            <select name="role" id="role">
+                <option value="-1" disabled selected>Choose a role</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+    {{/if}}
+    <button>Update</button>
+</form>
