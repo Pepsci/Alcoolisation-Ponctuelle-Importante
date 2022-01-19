@@ -9,6 +9,10 @@ router.get("/", (req, res, next) => {
   });
 });
 
+router.get("/menu", (req, res, next) => {
+  res.render("dashboard/dashboard");
+});
+
 router.get("/dashboard", (req, res, next) => {
   res.render("dashboard/drink-manage.hbs");
 });
@@ -51,18 +55,22 @@ router.get("/drink-update/:id", async (req, res, next) => {
   }
 });
 
-router.post("/:id", uploader.single("image"), async (req, res, next) => {
-  try {
-    const updatedDrink = { ...req.body };
-    if (req.file) updatedDrink.image = req.file.path;
-    await drinkModel.findByIdAndUpdate(req.params.id, updatedDrink, {
-      new: true,
-    });
-    res.redirect("/drink-manage");
-  } catch (e) {
-    next(e);
+router.post(
+  "/drink-update/:id",
+  uploader.single("image"),
+  async (req, res, next) => {
+    try {
+      const updatedDrink = { ...req.body };
+      if (req.file) updatedDrink.image = req.file.path;
+      await drinkModel.findByIdAndUpdate(req.params.id, updatedDrink, {
+        new: true,
+      });
+      res.redirect("/drink-manage");
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
 
 router.get("/drink-delete/:id", (req, res, next) => {
   drinkModel
