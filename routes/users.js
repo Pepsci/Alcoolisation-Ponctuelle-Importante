@@ -4,7 +4,7 @@ const userModel = require("../model/User");
 const bcrypt = require("bcrypt");
 const flash = require("connect-flash");
 const consumptionModel = require("../model/Consumption");
-//const drinkModel = require("../model/Drink");
+const drinkModel = require("../model/Drink");
 const uploader = require("./../config/cloudinary");
 
 router.get("/signup", (req, res, next) => {
@@ -34,7 +34,7 @@ router.get("/signin", (req, res, next) => {
 });
 
 router.post("/signin", async (req, res, next) => {
-  console.log('Hello')
+  console.log("Hello");
   const { email, password } = req.body;
   try {
     const foundUser = await userModel.findOne({ email });
@@ -52,6 +52,7 @@ router.post("/signin", async (req, res, next) => {
     }
     req.session.currentUser = {
       _id: foundUser._id,
+      role: foundUser.role,
     };
 
     res.redirect("/");
@@ -66,13 +67,36 @@ router.get("/logout", (req, res) => {
   });
 });
 
+router.get("/user-update/:id", async (req, res, next) => {
+  try {
+    const user = await userModel.findById(req.params.id);
+    res.render("user/user-update", { user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/user-update/:id", async (req, res, nexy) => {
+  try {
+    await userModel.findByIdAndUpdate(req.params.id, req.body);
+    if (req.session.currentUser.role === "admin") {
+      res.redirect("/user-manage");
+    } else if (req.session.currentUser.role === "user") {
+      res.redirect("/profil");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/profil/:id", (req, res, next) => {
   res.render("user/profil.hbs");
 });
 
 router.get("/cons-add", async (req, res, next) => {
   res.render("user/consumption-add.hbs", {
-    consumption: await consumptionModel.find().populate("drinks"),
+    drink: await drinkModel.find(),
+    // consumption: await consumptionModel.find().populate("drinks"),
   });
 });
 

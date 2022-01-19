@@ -6,7 +6,7 @@ const drinkSchema = new Schema({
     type: String,
   },
   image: String,
-  ABV : {
+  ABV: {
     type: Number,
     min: 1,
     max: 100,
