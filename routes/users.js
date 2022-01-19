@@ -4,7 +4,7 @@ const userModel = require("../model/User");
 const bcrypt = require("bcrypt");
 const flash = require("connect-flash");
 const consumptionModel = require("../model/Consumption");
-const drinkModel = require("../model/Drink");
+//const drinkModel = require("../model/Drink");
 const uploader = require("./../config/cloudinary");
 
 router.get("/signup", (req, res, next) => {
@@ -34,6 +34,7 @@ router.get("/signin", (req, res, next) => {
 });
 
 router.post("/signin", async (req, res, next) => {
+  console.log('Hello')
   const { email, password } = req.body;
   try {
     const foundUser = await userModel.findOne({ email });
@@ -65,7 +66,7 @@ router.get("/logout", (req, res) => {
   });
 });
 
-router.get("/profil", (req, res, next) => {
+router.get("/profil/:id", (req, res, next) => {
   res.render("user/profil.hbs");
 });
 
@@ -81,7 +82,7 @@ router.post("/cons-add", uploader.single("image"), async (req, res, next) => {
     if (!req.file) newCons.image = undefined;
     else newCons.image = req.file.path;
     await consumptionModel.create(newCons);
-    res.redirect("/profil");
+    res.redirect("/profil/:id");
   } catch (e) {
     next(e);
   }
