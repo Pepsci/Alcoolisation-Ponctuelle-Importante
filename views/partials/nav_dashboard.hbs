@@ -8,16 +8,17 @@
     <a href="">Profil</a>
     <a href="/logout">LOGOUT</a>
 
-    <div class="adminNav">
+    {{#if isAdmin}}
+           <div class="adminNav">
         <a href="/drink-add">Add Drink</a>
         <a href="/drink-manage">Manage Drink</a>
         <a href="/user-manage">Manage User</a>
     </div>
     {{/if}}
 
-    {{#if isAdmin}}
-        <a href="">TEST</a>
     {{/if}}
+
+    
 
     
 </nav>

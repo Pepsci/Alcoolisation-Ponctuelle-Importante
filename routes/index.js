@@ -11,7 +11,7 @@ router.get("/", (req, res, next) => {
   });
 });
 
-router.get("/menu", protectNavAdmin, (req, res, next) => {
+router.get("/menu", (req, res, next) => {
   res.render("dashboard/dashboard");
 });
 
@@ -88,6 +88,15 @@ router.get("/drink-delete/:id", (req, res, next) => {
     .findByIdAndDelete(req.params.id)
     .then((deletedDrink) => {
       res.redirect("/drink-manage");
+    })
+    .catch(next);
+});
+
+router.get("/user-delete/:id", (req, res, next) => {
+  userModel
+    .findByIdAndDelete(req.params.id)
+    .then((deletedDrink) => {
+      res.redirect("/user-manage");
     })
     .catch(next);
 });
