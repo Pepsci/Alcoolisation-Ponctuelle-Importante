@@ -9,8 +9,17 @@ router.get("/", (req, res, next) => {
   });
 });
 
+<<<<<<< HEAD
 router.get('/dashboard', (req, res, next) => {
   res.render('dashboard/drink-manage.hbs')
+=======
+router.get("/menu", (req, res, next) => {
+  res.render("dashboard/dashboard");
+});
+
+router.get("/dashboard", (req, res, next) => {
+  res.render("dashboard/drink-manage.hbs");
+>>>>>>> cd8e07ba5aff25a2541a9816f1e949e709a768a5
 });
 
 router.get('/drink-add', (req, res, next) => {
@@ -41,6 +50,7 @@ router.get('/drink-update/:id', async (req, res, next) => {
   }
 });
 
+<<<<<<< HEAD
 router.post('/drink-update/:id', uploader.single("image"), async (req,res, next) => {
   try {
     const updatedDrink = {...req.body}
@@ -50,8 +60,24 @@ res.redirect("dashboard/drink-manage.hbs")
   }
   catch(e){
     next(e)
+=======
+router.post(
+  "/drink-update/:id",
+  uploader.single("image"),
+  async (req, res, next) => {
+    try {
+      const updatedDrink = { ...req.body };
+      if (req.file) updatedDrink.image = req.file.path;
+      await drinkModel.findByIdAndUpdate(req.params.id, updatedDrink, {
+        new: true,
+      });
+      res.redirect("/drink-manage");
+    } catch (e) {
+      next(e);
+    }
+>>>>>>> cd8e07ba5aff25a2541a9816f1e949e709a768a5
   }
-});
+);
 
 router.get('/drink-manage', (req, res, next) => {
   res.render("dashboard/drink-manage.hbs")
