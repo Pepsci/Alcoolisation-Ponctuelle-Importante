@@ -3,7 +3,6 @@ const router = express.Router();
 const uploader = require("../config/cloudinary");
 const drinkModel = require("../model/Drink");
 const userModel = require("../model/User");
-const protectNavAdmin = require("../middlewares/exposeLoginStatus");
 
 router.get("/", (req, res, next) => {
   res.render("index", {

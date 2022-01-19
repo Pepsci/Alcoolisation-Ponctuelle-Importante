@@ -1,0 +1,24 @@
+ <script src="js/profil.js" type="module" ></script>
+ 
+ <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>ABV</th>
+                <th>Weekly Percentage</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each consumption}}
+            <tr>
+               {{> profile_consumption_row}} 
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <div id='calendar'></div>
+  

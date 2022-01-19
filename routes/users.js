@@ -34,7 +34,6 @@ router.get("/signin", (req, res, next) => {
 });
 
 router.post("/signin", async (req, res, next) => {
-  console.log("Hello");
   const { email, password } = req.body;
   try {
     const foundUser = await userModel.findOne({ email });
@@ -43,12 +42,12 @@ router.post("/signin", async (req, res, next) => {
       req.session.msg = { status: 401, text: "Invalid credentials" };
       /**  Same could be done using the flash middleware **/
       // req.flash("error", "Invalid credentials");  // If you wanted to use flash you could aswell, you would have to handle i
-      return res.redirect("/signin");
+      return res.redirect("/user/signin");
     }
     if (!bcrypt.compareSync(password, foundUser.password)) {
       // req.flash("error", "Invalid credentials");
       req.session.msg = { status: 401, text: "Invalid credentials" };
-      return res.render("/signin");
+      return res.render("user/signin");
     }
     req.session.currentUser = {
       _id: foundUser._id,
@@ -66,6 +65,13 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
   });
 });
+
+
+router.get("/profil", (req, res, next) => {
+  res.render("user/profil.hbs", {consumption : consumptionModel.find(),
+  js : ["profil"],
+  css : ["profil"]
+  });
 
 router.get("/user-update/:id", async (req, res, next) => {
   try {
@@ -89,9 +95,6 @@ router.post("/user-update/:id", async (req, res, nexy) => {
   }
 });
 
-router.get("/profil/:id", (req, res, next) => {
-  res.render("user/profil.hbs");
-});
 
 router.get("/cons-add", async (req, res, next) => {
   res.render("user/consumption-add.hbs", {
