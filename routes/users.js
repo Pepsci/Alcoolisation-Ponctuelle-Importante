@@ -4,7 +4,7 @@ const userModel = require("../model/User");
 const bcrypt = require("bcrypt");
 const flash = require("connect-flash");
 const consumptionModel = require("../model/Consumption");
-//const drinkModel = require("../model/Drink");
+const drinkModel = require("../model/Drink");
 const uploader = require("./../config/cloudinary");
 
 router.get("/signup", (req, res, next) => {
@@ -79,7 +79,11 @@ router.get("/user-update/:id", async (req, res, next) => {
 router.post("/user-update/:id", async (req, res, nexy) => {
   try {
     await userModel.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect("/user-manage");
+    if (req.session.currentUser.role === "admin") {
+      res.redirect("/user-manage");
+    } else if (req.session.currentUser.role === "user") {
+      res.redirect("/profil");
+    }
   } catch (error) {
     next(error);
   }
@@ -91,7 +95,8 @@ router.get("/profil/:id", (req, res, next) => {
 
 router.get("/cons-add", async (req, res, next) => {
   res.render("user/consumption-add.hbs", {
-    consumption: await consumptionModel.find().populate("drinks"),
+    drink: await drinkModel.find(),
+    // consumption: await consumptionModel.find().populate("drinks"),
   });
 });
 
