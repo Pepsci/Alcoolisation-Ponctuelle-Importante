@@ -7,11 +7,15 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const hbs = require("hbs");
 const flash = require("connect-flash");
-const session = require('express-session');
-const MongoStore = require('connect-mongo')
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+
+require("dotenv").config();
+require("./config/mongo");
+
 
 const app = express();
 
@@ -20,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(flash())
+app.use(flash());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -46,6 +50,12 @@ function checkloginStatus(req, res, next) {
   next(); // continue to the requested route
 }
 
+function checkRoleAdmin(req, res, next) {
+  res.locals.user = req.user;
+  res.locals.isLoggedIn = true;
+  res.locals.isAdmin = req.session.currentUser.role === "admin";
+}
+
 app.use(checkloginStatus);
 
 app.use(require("./middlewares/exposeLoginStatus")); // expose le status de connexion aux templates
@@ -53,7 +63,6 @@ app.use(require("./middlewares/exposeFlashMessage")); // affiche les messages da
 
 app.use("/", indexRouter);
 app.use("/", usersRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
