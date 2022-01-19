@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const drinkSchema = new Schema({
-  name: {
+  drinkName: {
     type: String,
   },
   image: String,
@@ -17,5 +17,5 @@ const drinkSchema = new Schema({
   },
 });
 
-const drinkModel = mongoose.model("drink", drinkSchema);
+const drinkModel = mongoose.model("drinks", drinkSchema);
 module.exports = drinkModel;
