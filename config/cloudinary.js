@@ -10,16 +10,15 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-// cloudinary : SAAS platform : specialized in images hosting (tools : metadata, image analyzing ...)
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  folder: "folder-name", // The name of the folder in cloudinary
+  folder: "folder-name",
   allowedFormats: ["jpg", "png"],
   filename: function (req, file, cb) {
-    cb(null, file.originalname); // The file on cloudinary would have the same name as the original file name
+    cb(null, file.originalname);
   },
 });
 
 const fileUploader = multer({ storage });
-// a middleware designed to parse file from requests and associate to req.file
+
 module.exports = fileUploader;

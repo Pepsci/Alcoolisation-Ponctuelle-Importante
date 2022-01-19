@@ -12,7 +12,7 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", async (req, res, next) => {
-  const newUser = {...req.body}
+  const newUser = { ...req.body };
   try {
     const foundUser = await userModel.findOne({ email: newUser.email });
     if (foundUser) {
@@ -24,7 +24,7 @@ router.post("/signup", async (req, res, next) => {
       res.redirect("/signin");
     }
   } catch (e) {
-    console.error(e)
+    console.error(e);
     res.redirect("/signup");
   }
 });
