@@ -5,7 +5,7 @@ const consumptionSchema = new Schema({
   date: Date,
   quantity: Number,
   user: { type: Schema.Types.ObjectId, ref: "user" },
-  drink: { type: Schema.Types.ObjectId, ref: "drink" },
+  drink: { type: Schema.Types.ObjectId, ref: "drinks" },
 });
 
 const consumptionModel = mongoose.model("consumption", consumptionSchema);

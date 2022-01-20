@@ -66,16 +66,15 @@ router.get("/logout", (req, res) => {
   });
 });
 
-
 router.get("/profil", async (req, res, next) => {
   try {
-  res.render("user/profil.hbs", {
-    consumption : await consumptionModel.find(),
-  js : ["profil"],
-  css : ["profil"]
-  })}
-  catch(e){
-    console.error(e)
+    res.render("user/profil.hbs", {
+      consumption: await consumptionModel.find().populate("drink"),
+      js: ["profil"],
+      css: ["profil"],
+    });
+  } catch (e) {
+    console.error(e);
   }
 });
 
@@ -101,7 +100,6 @@ router.post("/user-update/:id", async (req, res, nexy) => {
   }
 });
 
-
 router.get("/cons-add", async (req, res, next) => {
   res.render("user/consumption-add.hbs", {
     drink: await drinkModel.find(),
@@ -114,8 +112,8 @@ router.post("/cons-add", uploader.single("image"), async (req, res, next) => {
     const newCons = { ...req.body };
     if (!req.file) newCons.image = undefined;
     else newCons.image = req.file.path;
-    newCons.user = req.session.currentUser._id
-    console.log(newCons)
+    newCons.user = req.session.currentUser._id;
+    console.log(newCons);
     await consumptionModel.create(newCons);
     res.redirect("/profil");
   } catch (e) {
