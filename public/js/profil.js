@@ -18,3 +18,13 @@ document.addEventListener("click", () => {
   );
   console.log(blockEvent);
 });
+
+// const quantity = document.getElementsByClassName("quantity");
+// const drink = document.getElementsByClassName("drink");
+// const test = document.getElementsByClassName("test");
+
+// drink.forEach((element, i) => {
+//   if (quantity[i].innerHTML === "") {
+//     test.removeChild(element);
+//   }
+// });

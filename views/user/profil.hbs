@@ -2,7 +2,7 @@
  
 {{> nav_dashboard}}
 
- <table>
+ {{!-- <table>
         <thead>
             <tr>
                 <th>Date</th>
@@ -21,12 +21,19 @@
             </tr>
             {{/each}}
         </tbody>
-    </table>
+    </table> --}}
 
+
+<div class="test">
     <p>
+    {{#each consumption}}
+    <p>{{this.date}}</p>
+    <p>{{this.title}}</p>
     {{#each drink}}
-    <p>{{this.drinkName}}</p>
+    <p class="drink">nom : {{drink.drinkName}}, <span class="quantity">{{this.quantity}}</span></p>
+    {{/each}}
     {{/each}}
     </p>
+</div>
     <div id='calendar'></div>
   
