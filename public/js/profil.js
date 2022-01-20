@@ -1,5 +1,3 @@
-// import customViewPlugin from "./custumView";
-
 document.addEventListener("DOMContentLoaded", function () {
   let calendarEl = document.getElementById("calendar");
   let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -12,4 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
   calendar.render();
+});
+
+document.addEventListener("click", () => {
+  const blockEvent = document.getElementsByClassName(
+    "fc-daygrid-event-harness"
+  );
+  console.log(blockEvent);
 });
