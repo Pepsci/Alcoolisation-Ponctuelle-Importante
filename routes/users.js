@@ -6,6 +6,7 @@ const flash = require("connect-flash");
 const consumptionModel = require("../model/Consumption");
 const drinkModel = require("../model/Drink");
 const uploader = require("./../config/cloudinary");
+const session = require("express-session");
 
 router.get("/signup", (req, res, next) => {
   res.render("user/signup.hbs");
@@ -66,16 +67,25 @@ router.get("/logout", (req, res) => {
   });
 });
 
-
 router.get("/profil", async (req, res, next) => {
   try {
-  res.render("user/profil.hbs", {
-    consumption : await consumptionModel.find(),
-  js : ["profil"],
-  css : ["profil"]
-  })}
-  catch(e){
-    console.error(e)
+    res.render("user/profil.hbs", {
+      consumption: await consumptionModel
+        .find({ user: req.session.currentUser._id })
+        .populate("drink"),
+      js: ["profil"],
+      css: ["profil"],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+router.get("/api", async (req, res, next) => {
+  try {
+    res.json(await consumptionModel.find().populate("drink"));
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -101,7 +111,6 @@ router.post("/user-update/:id", async (req, res, nexy) => {
   }
 });
 
-
 router.get("/cons-add", async (req, res, next) => {
   res.render("user/consumption-add.hbs", {
     drink: await drinkModel.find(),
@@ -114,8 +123,8 @@ router.post("/cons-add", uploader.single("image"), async (req, res, next) => {
     const newCons = { ...req.body };
     if (!req.file) newCons.image = undefined;
     else newCons.image = req.file.path;
-    newCons.user = req.session.currentUser._id
-    console.log(newCons)
+    newCons.user = req.session.currentUser._id;
+    console.log(newCons);
     await consumptionModel.create(newCons);
     res.redirect("/profil");
   } catch (e) {
