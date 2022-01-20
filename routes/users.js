@@ -67,11 +67,17 @@ router.get("/logout", (req, res) => {
 });
 
 
-router.get("/profil", (req, res, next) => {
-  res.render("user/profil.hbs", {consumption : consumptionModel.find(),
+router.get("/profil", async (req, res, next) => {
+  try {
+  res.render("user/profil.hbs", {
+    consumption : await consumptionModel.find(),
   js : ["profil"],
   css : ["profil"]
-  });
+  })}
+  catch(e){
+    console.error(e)
+  }
+});
 
 router.get("/user-update/:id", async (req, res, next) => {
   try {
@@ -108,8 +114,10 @@ router.post("/cons-add", uploader.single("image"), async (req, res, next) => {
     const newCons = { ...req.body };
     if (!req.file) newCons.image = undefined;
     else newCons.image = req.file.path;
+    newCons.user = req.session.currentUser._id
+    console.log(newCons)
     await consumptionModel.create(newCons);
-    res.redirect("/profil/:id");
+    res.redirect("/profil");
   } catch (e) {
     next(e);
   }
