@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uploader = require("../config/cloudinary");
 const drinkModel = require("../model/Drink");
+const userModel = require("../model/User");
 
 router.get("/", (req, res, next) => {
   res.render("index", {
@@ -19,6 +20,15 @@ router.get("/dashboard", (req, res, next) => {
 
 router.get("/drink-add", (req, res, next) => {
   res.render("dashboard/drink-add");
+});
+
+router.get("/user-manage", async (req, res, next) => {
+  try {
+    res.render("dashboard/user-manage", {
+      userManage: await userModel.find(),
+      css: ["table"],
+    });
+  } catch (next) {}
 });
 
 router.post("/drink-add", uploader.single("image"), async (req, res, next) => {
@@ -77,6 +87,15 @@ router.get("/drink-delete/:id", (req, res, next) => {
     .findByIdAndDelete(req.params.id)
     .then((deletedDrink) => {
       res.redirect("/drink-manage");
+    })
+    .catch(next);
+});
+
+router.get("/user-delete/:id", (req, res, next) => {
+  userModel
+    .findByIdAndDelete(req.params.id)
+    .then((deletedDrink) => {
+      res.redirect("/user-manage");
     })
     .catch(next);
 });

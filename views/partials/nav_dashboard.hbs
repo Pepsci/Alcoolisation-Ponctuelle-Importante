@@ -3,11 +3,22 @@
        <a href="/signin">LOGIN</a>
     {{/unless}}
     {{#if isLoggedIn}}
-    <a href="">Form Add Conso User</a>
-    <a href="">Recap</a>
-    <a href="/logout"><img class="banniere" src="./../images/logout.png" alt=""></a>
+    <a href="/cons-add">Form Add Conso User</a>
+    <a href="">Recap conso</a>
+    <a href="/profil">Profil</a>
+    <a href="/logout">LOGOUT</a>
+
+    {{#if isAdmin}}
+           <div class="adminNav">
+        <a href="/drink-add">Add Drink</a>
+        <a href="/drink-manage">Manage Drink</a>
+        <a href="/user-manage">Manage User</a>
+    </div>
     {{/if}}
 
+    {{/if}}
+
+    
 
     
 </nav>
