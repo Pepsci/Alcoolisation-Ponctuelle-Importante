@@ -1,0 +1,28 @@
+{{> nav_dashboard}}
+
+<h1>User Manage Page</h1>
+
+  <table class="product-manage-table">
+    <thead>
+      <tr class="table-row">
+        <th class="table-head">Name</th>
+        <th class="table-head">Email</th>
+        <th class="table-head">Role</th>
+        <th class="table-head">Edit</th>
+        <th class="table-head">Delete</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each userManage}}
+      <tr class="table-row">
+        {{> dashboard_user_row}}
+      </tr>
+      {{/each}}
+      {{#unless userManage}}
+      <tr>
+        <td colspan="6">sorry no drink yet</td>
+      </tr>
+      {{/unless}}
+    </tbody>
+  </table>

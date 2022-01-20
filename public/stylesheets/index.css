@@ -1,0 +1,77 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-color: antiquewhite;
+}
+
+.banniere {
+  position: absolute;
+  height: 50px;
+  /* width: 700px; */
+  border: 2px solid black;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%);
+}
+
+.caisse {
+  position: absolute;
+  bottom: 400px;
+  right: 10px;
+}
+
+.barImg {
+  height: 400px;
+}
+
+.caisseImg {
+  height: 200px;
+}
+
+.menu img {
+  position: absolute;
+  width: 250px;
+  bottom: 381px;
+  left: 30px;
+}
+
+.onBar {
+  position: absolute;
+  bottom: 386px;
+  left: 300px;
+}
+
+.onBar img {
+  height: 100px;
+}
+
+.ongBar,
+img:nth-child(2) {
+  position: absolute;
+  height: 270px;
+  bottom: 15px;
+  left: 115px;
+}
+
+.log {
+  position: absolute;
+  right: 20%;
+  top: 100px;
+  height: 70px;
+  width: 100px;
+}

@@ -1,0 +1,26 @@
+{{> nav_dashboard}}
+
+<h2><a href="/drink-update">Add Drink</a></h2>
+
+<form action="/drink-update/{{drink._id}}" method="post" enctype="multipart/form-data">
+
+    <label for="drink-name">Name</label>
+   <input type="text" name="drinkName" id="name" value="{{drink.drinkName}}">
+
+   <label for="ABV">ABV (Alcohol By Volume)</label>
+   <input type="number" name="ABV" id="ABV" value="{{drink.ABV}}">
+
+    <label for="size">Size</label>
+    <select name="size" id="size">
+        <option value="-1" disabled selected>Choose a size </option>
+        {{#each drinkSize}}
+            <option value="{{this._id}}">{{this.size}}</option>
+        {{/each}}
+    </select>
+
+    <img class="preview" src="{{drink.image}}" alt="{{drink.name}}">
+
+    <label for="drink-image">Choose a Image</label>
+    <input type="file" name="image" id="image">
+    <button>Update Drink</button>
+</form>

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
@@ -9,11 +10,15 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-// cloudinary : SAAS platform : specialized in images hosting (tools : metadata, image analyzing ...)
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
+  folder: "folder-name",
+  allowedFormats: ["jpg", "png"],
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
 });
 
 const fileUploader = multer({ storage });
-// a middleware designed to parse file from requests and associate to req.file
+
 module.exports = fileUploader;
