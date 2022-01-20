@@ -83,7 +83,11 @@ router.get("/profil", async (req, res, next) => {
 
 router.get("/api", async (req, res, next) => {
   try {
-    res.json(await consumptionModel.find().populate("drink"));
+    res.json(
+      await consumptionModel
+        .find({ user: req.session.currentUser._id })
+        .populate("drink")
+    );
   } catch (error) {
     next(error);
   }
@@ -120,7 +124,23 @@ router.get("/cons-add", async (req, res, next) => {
 
 router.post("/cons-add", uploader.single("image"), async (req, res, next) => {
   try {
-    const newCons = { ...req.body };
+    const { title, image, user, date } = req.body;
+    delete req.body.date;
+    delete req.body.title;
+    delete req.body.image;
+    delete req.body.user;
+    const drink = [];
+    const keys = Object.keys(req.body);
+    const values = Object.values(req.body);
+    keys.forEach((key, i) => {
+      drink.push({
+        drink: key,
+        quantity: values[i],
+      });
+    });
+    const newCons = { title, image, user, date, drink };
+    console.log(newCons);
+
     if (!req.file) newCons.image = undefined;
     else newCons.image = req.file.path;
     newCons.user = req.session.currentUser._id;
