@@ -6,3 +6,18 @@
 a {
   color: #00B7FF;
 } */
+
+.nav{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.navbtn{
+  border: 2px black solid;
+  border-radius: 10%;
+  background-color:antiquewhite;
+  padding: 5px;
+  margin: 10px;
+  width: 7%;
+}

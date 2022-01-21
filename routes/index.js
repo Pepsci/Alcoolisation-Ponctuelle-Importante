@@ -3,6 +3,7 @@ const router = express.Router();
 const uploader = require("../config/cloudinary");
 const drinkModel = require("../model/Drink");
 const userModel = require("../model/User");
+const adminProtect = require("../middlewares/protectAdminRoute")
 
 router.get("/", (req, res, next) => {
   res.render("index", {
@@ -22,7 +23,7 @@ router.get("/drink-add", (req, res, next) => {
   res.render("dashboard/drink-add");
 });
 
-router.get("/user-manage", async (req, res, next) => {
+router.get("/user-manage", adminProtect, async (req, res, next) => {
   try {
     res.render("dashboard/user-manage", {
       userManage: await userModel.find(),
@@ -46,7 +47,7 @@ router.post("/drink-add", uploader.single("image"), async (req, res, next) => {
   }
 });
 
-router.get("/drink-manage", async (req, res, next) => {
+router.get("/drink-manage", adminProtect, async (req, res, next) => {
   try {
     res.render("dashboard/drink-manage", {
       drinkManage: await drinkModel.find(),
