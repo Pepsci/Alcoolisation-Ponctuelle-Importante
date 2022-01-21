@@ -122,6 +122,28 @@ router.get("/api", async (req, res, next) => {
   }
 });
 
+router.get("/profilAPI", async (req, res, next) => {
+  try {
+    res.json({
+      consumption: await consumptionModel
+        .find({
+          $and: [{ user: req.session.currentUser._id }, {}],
+        })
+        .populate({
+          path: "drink",
+          populate: {
+            path: "drink",
+            model: "drinks",
+          },
+        }),
+      js: ["profil"],
+      css: ["profil"],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
 router.get("/user-update/:id", async (req, res, next) => {
   try {
     const user = await userModel.findById(req.params.id);
@@ -162,8 +184,8 @@ router.post("/cons-add", uploader.single("image"), async (req, res, next) => {
     const keys = Object.keys(req.body);
     const values = Object.values(req.body);
     keys.forEach((key, i) => {
-      if (values === 0) {
-        delete key;
+      if (values[i] === "0") {
+        delete req.body[key];
       } else {
         drink.push({
           drink: key,
@@ -172,12 +194,9 @@ router.post("/cons-add", uploader.single("image"), async (req, res, next) => {
       }
     });
     const newCons = { title, image, user, date, drink };
-    console.log(newCons);
-
     if (!req.file) newCons.image = undefined;
     else newCons.image = req.file.path;
     newCons.user = req.session.currentUser._id;
-    console.log(newCons);
     await consumptionModel.create(newCons);
     res.redirect("/profil");
   } catch (e) {

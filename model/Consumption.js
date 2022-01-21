@@ -9,7 +9,10 @@ const consumptionSchema = new Schema({
   drink: [
     {
       drink: { type: Schema.Types.ObjectId, ref: "drinks" },
-      quantity: Number,
+      quantity: {
+        type : Number,
+        min : 0,
+      }
     },
   ],
 });
